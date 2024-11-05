@@ -1,0 +1,54 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: order
+  datasource:
+    url: jdbc:h2:file:F:\MicroServicesCourse\Ecommerce\OrderService\src\main\resources\data\Ecommerce;AUTO_SERVER=true
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  h2:
+    console.enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect:  org.hibernate.dialect.H2Dialect
+        format_sql: true
+    show-sql: false
+  rabbitmq:
+    addresses: localhost:5672
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: true
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0  # Sample 100% of requests for testing; adjust as needed.
+
+logging:
+  level:
+    io.micrometer.tracing: DEBUG
+    io.zipkin.reporter2: DEBUG
+
+micrometer:
+  tracing:
+    reporter:
+      zipkin:
+        enabled: true
+        base-url: http://localhost:9411/api/v2/spans
+
+resilience4j:
+  retry:
+    instances:
+      paymentRetry:
+              max-attempts: 5          # Retry up to 3 times
+              wait-duration: 2000        # Wait 2 seconds between retries

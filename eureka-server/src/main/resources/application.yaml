@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: eureka-server
+
+server:
+  port: 8761
+
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0  # Sample 100% of requests for testing; adjust as needed.
+    baggage:
+      enabled: true
